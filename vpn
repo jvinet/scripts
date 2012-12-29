@@ -1,0 +1,13 @@
+#!/bin/bash
+
+CFGDIR="/etc/openvpn"
+STATEDIR="/var/run/openvpn"
+
+success=0
+mkdir -p "${STATEDIR}"
+for cfg in "${CFGDIR}"/*.conf; do
+	echo "$(basename "${cfg}" .conf) "
+	/usr/sbin/openvpn --daemon --writepid "${STATEDIR}"/"$(basename "${cfg}" .conf)".pid --cd "${CFGDIR}" --config "${cfg}" || success=$?
+done
+
+exit $success

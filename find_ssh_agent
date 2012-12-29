@@ -1,0 +1,10 @@
+#!/bin/bash
+
+pid=`pgrep ssh-agent`
+[ -n "$pid" ] || exit 1
+
+dir=`ls -d1 /tmp/ssh-*/agent* | head -n 1`
+
+echo export SSH_AGENT_PID=$pid
+echo export SSH_AUTH_SOCK=$dir
+
